@@ -3,103 +3,142 @@
 <head>
   <title>LabCare - Diagnostic Lab Software</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #f4f7fa;
     }
 
-    header {
-      background: #0d6efd;
-      color: white;
-      padding: 20px;
-      text-align: center;
+    body {
+      background: #f5f7fb;
     }
 
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #555;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #0d6efd;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-    }
-
-    .features {
-      padding: 40px 20px;
+    nav {
       background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    nav h2 {
+      color: #2c7be5;
+    }
+
+    .container {
       display: flex;
       justify-content: center;
-      gap: 30px;
+      align-items: center;
+      height: 85vh;
+      gap: 60px;
+      padding: 20px;
       flex-wrap: wrap;
     }
 
-    .feature-box {
-      background: #f8f9fa;
-      padding: 20px;
-      width: 250px;
-      border-radius: 10px;
+    .hero {
+      max-width: 400px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .login-box {
+      background: white;
+      padding: 30px;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .login-box h3 {
+      margin-bottom: 15px;
       text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2c7be5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
     }
 
     footer {
       text-align: center;
-      padding: 15px;
-      background: #0d6efd;
-      color: white;
-      margin-top: 40px;
+      padding: 20px;
+      background: white;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h2>LabCare Diagnostic Software</h2>
-</header>
+<nav>
+  <h2>LabCare</h2>
+</nav>
 
-<section class="hero">
-  <h1>Smart Cloud Software for Diagnostic Labs</h1>
-  <p>Manage patients, reports, and billing easily in one system.</p>
-  <a href="/patients" class="btn">View Patients</a>
-</section>
+<div class="container">
 
-<section class="features">
-  <div class="feature-box">
-    <h3>Patient Management</h3>
-    <p>Add and store patient data securely.</p>
+  <div class="hero">
+    <h1>Cloud Software for Diagnostic Labs</h1>
+    <p>Manage patients, reports and lab operations in one simple system.</p>
   </div>
 
-  <div class="feature-box">
-    <h3>Cloud Database</h3>
-    <p>Access your data from anywhere.</p>
+  <div class="login-box">
+    <h3>Admin Login</h3>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p class="error" id="error"></p>
   </div>
 
-  <div class="feature-box">
-    <h3>Secure & Reliable</h3>
-    <p>Powered by PostgreSQL & Render.</p>
-  </div>
-</section>
+</div>
 
 <footer>
-  © 2026 LabCare Software | Built by Nitish
+  © 2026 LabCare | Built by Nitish
 </footer>
+
+<script>
+  function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    if(user === "admin" && pass === "1234") {
+      localStorage.setItem("loggedIn", "true");
+      window.location.href = "/dashboard.html";
+    } else {
+      document.getElementById("error").innerText = "Invalid Credentials";
+    }
+  }
+</script>
 
 </body>
 </html>
