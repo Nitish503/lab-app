@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard - LabCare</title>
+  <title>LabCare Admin Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -13,56 +13,70 @@
     }
 
     body {
-      background: #f5f7fb;
+      background: #f4f6f9;
     }
 
+    /* Sidebar */
     .sidebar {
-      width: 220px;
+      width: 250px;
       height: 100vh;
-      background: #2c7be5;
+      background: #1f2937;
       position: fixed;
       color: white;
-      padding: 20px;
+      padding-top: 20px;
     }
 
     .sidebar h2 {
+      text-align: center;
       margin-bottom: 30px;
+      font-size: 20px;
     }
 
     .sidebar a {
       display: block;
-      color: white;
+      padding: 12px 20px;
+      color: #d1d5db;
       text-decoration: none;
-      margin: 15px 0;
+      transition: 0.3s;
     }
 
+    .sidebar a:hover {
+      background: #374151;
+      color: white;
+    }
+
+    /* Main Content */
     .main {
-      margin-left: 220px;
-      padding: 30px;
+      margin-left: 250px;
+      padding: 20px;
     }
 
+    /* Top Bar */
     .topbar {
+      background: white;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       margin-bottom: 20px;
     }
 
     .logout-btn {
-      padding: 8px 15px;
-      background: #e63946;
-      color: white;
+      padding: 6px 12px;
+      background: #ef4444;
       border: none;
+      color: white;
       cursor: pointer;
       border-radius: 4px;
     }
 
-    .card {
+    /* Content Box */
+    .content-box {
       background: white;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
     }
 
     input, select {
@@ -70,34 +84,36 @@
       margin: 5px 5px 5px 0;
     }
 
-    button.save-btn {
+    button.primary {
       padding: 8px 15px;
-      background: #2c7be5;
+      background: #2563eb;
       color: white;
       border: none;
-      cursor: pointer;
       border-radius: 4px;
+      cursor: pointer;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     table, th, td {
       border: 1px solid #ddd;
     }
 
-    th, td {
+    th {
+      background: #2563eb;
+      color: white;
+      padding: 8px;
+    }
+
+    td {
       padding: 8px;
       text-align: center;
     }
 
-    th {
-      background: #2c7be5;
-      color: white;
-    }
   </style>
 </head>
 
@@ -105,50 +121,24 @@
 
 <div class="sidebar">
   <h2>LabCare</h2>
-  <a href="#">Dashboard</a>
+  <a href="#" onclick="loadDashboard()">Dashboard</a>
+  <a href="#" onclick="loadRegistration()">Patient Registration</a>
+  <a href="#">Billing</a>
+  <a href="#">Reports</a>
+  <a href="#">Test List</a>
+  <a href="#">Settings</a>
 </div>
 
 <div class="main">
 
   <div class="topbar">
-    <h1>Admin Dashboard</h1>
+    <h3>Admin Panel</h3>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <!-- Add Patient Form -->
-  <div class="card">
-    <h3>Add Patient</h3>
-
-    <input type="text" id="name" placeholder="Name">
-    <input type="number" id="age" placeholder="Age">
-
-    <select id="gender">
-      <option value="">Gender</option>
-      <option>Male</option>
-      <option>Female</option>
-    </select>
-
-    <input type="text" id="phone" placeholder="Phone">
-
-    <button class="save-btn" onclick="addPatient()">Save</button>
-  </div>
-
-  <!-- Patient Table -->
-  <div class="card">
-    <h3>Patient List</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Phone</th>
-        </tr>
-      </thead>
-      <tbody id="patientTable">
-      </tbody>
-    </table>
+  <div class="content-box" id="contentArea">
+    <h2>Welcome to LabCare Dashboard</h2>
+    <p>Select an option from sidebar.</p>
   </div>
 
 </div>
@@ -165,9 +155,48 @@
     window.location.href = "/";
   }
 
-  // Add patient
-  function addPatient() {
+  function loadDashboard() {
+    document.getElementById("contentArea").innerHTML = `
+      <h2>Dashboard Overview</h2>
+      <p>System is running successfully ✅</p>
+    `;
+  }
 
+  function loadRegistration() {
+    document.getElementById("contentArea").innerHTML = `
+      <h2>Patient Registration</h2>
+
+      <input type="text" id="name" placeholder="Name">
+      <input type="number" id="age" placeholder="Age">
+      <select id="gender">
+        <option value="">Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+      <input type="text" id="phone" placeholder="Phone">
+
+      <button class="primary" onclick="addPatient()">Save</button>
+
+      <h3 style="margin-top:20px;">Patient List</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody id="patientTable"></tbody>
+      </table>
+    `;
+
+    loadPatients();
+  }
+
+  function addPatient() {
     const name = document.getElementById("name").value;
     const age = document.getElementById("age").value;
     const gender = document.getElementById("gender").value;
@@ -175,44 +204,35 @@
 
     fetch("/add-patient", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, age, gender, phone })
     })
     .then(res => res.json())
     .then(() => {
       loadPatients();
-      document.getElementById("name").value = "";
-      document.getElementById("age").value = "";
-      document.getElementById("gender").value = "";
-      document.getElementById("phone").value = "";
     });
   }
 
-  // Load patients
   function loadPatients() {
     fetch("/patients")
       .then(res => res.json())
       .then(data => {
         const table = document.getElementById("patientTable");
+        if (!table) return;
         table.innerHTML = "";
-
-        data.forEach(patient => {
+        data.forEach(p => {
           table.innerHTML += `
             <tr>
-              <td>${patient.id}</td>
-              <td>${patient.name}</td>
-              <td>${patient.age}</td>
-              <td>${patient.gender}</td>
-              <td>${patient.phone}</td>
+              <td>${p.id}</td>
+              <td>${p.name}</td>
+              <td>${p.age}</td>
+              <td>${p.gender}</td>
+              <td>${p.phone}</td>
             </tr>
           `;
         });
       });
   }
-
-  loadPatients();
 
 </script>
 
