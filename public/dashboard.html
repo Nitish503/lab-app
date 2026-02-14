@@ -16,41 +16,6 @@
       background: #f4f6f9;
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      background: #1f2937;
-      position: fixed;
-      color: white;
-      padding-top: 20px;
-    }
-
-    .sidebar h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 20px;
-    }
-
-    .sidebar a {
-      display: block;
-      padding: 12px 20px;
-      color: #d1d5db;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover {
-      background: #374151;
-      color: white;
-    }
-
-    /* Main Content */
-    .main {
-      margin-left: 250px;
-      padding: 20px;
-    }
-
     /* Top Bar */
     .topbar {
       background: white;
@@ -59,7 +24,13 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
+    }
+
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      border: none;
+      background: none;
     }
 
     .logout-btn {
@@ -71,12 +42,63 @@
       border-radius: 4px;
     }
 
-    /* Content Box */
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #1f2937;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      color: white;
+      padding-top: 60px;
+      transition: 0.3s;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #d1d5db;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background: #374151;
+      color: white;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      top: 0;
+      left: 0;
+      display: none;
+      z-index: 500;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px;
+    }
+
     .content-box {
       background: white;
       padding: 20px;
       border-radius: 6px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-top: 20px;
     }
 
     input, select {
@@ -119,28 +141,27 @@
 
 <body>
 
-<div class="sidebar">
-  <h2>LabCare</h2>
+<div class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <h3>LabCare Admin</h3>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="sidebar" id="sidebar">
   <a href="#" onclick="loadDashboard()">Dashboard</a>
   <a href="#" onclick="loadRegistration()">Patient Registration</a>
   <a href="#">Billing</a>
   <a href="#">Reports</a>
   <a href="#">Test List</a>
-  <a href="#">Settings</a>
 </div>
 
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
 <div class="main">
-
-  <div class="topbar">
-    <h3>Admin Panel</h3>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-
   <div class="content-box" id="contentArea">
     <h2>Welcome to LabCare Dashboard</h2>
-    <p>Select an option from sidebar.</p>
+    <p>Select an option from menu ☰</p>
   </div>
-
 </div>
 
 <script>
@@ -155,14 +176,21 @@
     window.location.href = "/";
   }
 
+  function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+  }
+
   function loadDashboard() {
+    toggleSidebar();
     document.getElementById("contentArea").innerHTML = `
       <h2>Dashboard Overview</h2>
-      <p>System is running successfully ✅</p>
+      <p>System running successfully ✅</p>
     `;
   }
 
   function loadRegistration() {
+    toggleSidebar();
     document.getElementById("contentArea").innerHTML = `
       <h2>Patient Registration</h2>
 
